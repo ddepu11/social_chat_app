@@ -1,0 +1,15 @@
+{
+  "name": "socialchatapp",
+  "version": "1.0.0",
+  "description": "chat application useing chat engine",
+  "main": "index.js",
+  "scripts": {
+    "start": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "webpack": "^5.58.1",
+    "webpack-cli": "^4.9.0"
+  }
+}
