@@ -2,6 +2,8 @@ const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 module.exports = {
+  target: "web",
+
   entry: path.resolve(__dirname, "../src/index.jsx"),
 
   plugins: [
@@ -23,10 +25,17 @@ module.exports = {
           },
         },
       },
+
       {
         test: /\.css$/i,
         exclude: /node_modules/,
         use: ["style-loader", "css-loader"],
+      },
+
+      {
+        test: /\.(png|svg|jpg|jpeg|gif)$/i,
+        exclude: /node_modules/,
+        type: "asset/resource",
       },
     ],
   },
@@ -34,11 +43,11 @@ module.exports = {
   output: {
     filename: "bundle.js",
     path: path.resolve(__dirname, "../build"),
+    assetModuleFilename: "images/[hash][ext][query]",
+    publicPath: "/",
   },
 
   resolve: {
     extensions: [".js", ".json", ".jsx"],
   },
-
-  target: "web",
 };
