@@ -6,7 +6,6 @@ import {
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { collection, addDoc } from 'firebase/firestore';
-import { v4 as uuidv4 } from 'uuid';
 import clearAllSetTimeoutOrSetInterval from '../../../utils/clearAllSetTimeoutOrSetInterval';
 import validateForm from '../../../utils/validateForm';
 import { authInstance, firestoreInstance } from '../../../config/firebase';
@@ -18,6 +17,7 @@ import {
 
 const useSignUpLogic = () => {
   const dispatch = useDispatch();
+
   const history = useHistory();
 
   const { hasUserLoggedIn } = useSelector((state) => state.user.value);
@@ -31,15 +31,11 @@ const useSignUpLogic = () => {
 
   const setTimeOutId = useRef(0);
 
-  useEffect(() => {
-    if (hasUserLoggedIn) {
-      history.push('/');
-    }
+  useEffect(
+    () => () => clearAllSetTimeoutOrSetInterval(setTimeOutId),
 
-    return () => {
-      clearAllSetTimeoutOrSetInterval(setTimeOutId);
-    };
-  }, [history, hasUserLoggedIn]);
+    [history, hasUserLoggedIn]
+  );
 
   const validationMessageTags = {
     emailValidationMessageTag: useRef(null),
@@ -56,7 +52,9 @@ const useSignUpLogic = () => {
     )
       .then(() => {
         dispatch(notificationShowSuccess({ msg: 'Successfully siggned up!' }));
+
         dispatch(userLoadingEnds());
+
         setUserCredentials({
           email: '',
           fullName: '',
@@ -73,7 +71,6 @@ const useSignUpLogic = () => {
   const saveUserDoc = async () => {
     try {
       const docRef = await addDoc(collection(firestoreInstance, 'users'), {
-        id: uuidv4(),
         email: userCredentials.email,
         fullName: userCredentials.fullName,
         userName: userCredentials.userName,
@@ -81,16 +78,7 @@ const useSignUpLogic = () => {
           fileName: 'dummyDp',
           url: '',
         },
-        bio: '',
-        website: '',
-        phoneNumber: '',
-        gender: '',
-        following: [],
-        followers: [],
         createdOn: Date.now(),
-        likedPostsIds: [],
-        savedPostsIds: [],
-        notifications: [],
       });
 
       if (docRef) {
@@ -146,6 +134,7 @@ const useSignUpLogic = () => {
 
     setUserCredentials({ ...userCredentials, [name]: value });
   };
+
   const { userLoading } = useSelector((state) => state.user.value);
 
   return {
