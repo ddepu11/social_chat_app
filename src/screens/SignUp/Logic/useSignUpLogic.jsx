@@ -78,6 +78,7 @@ const useSignUpLogic = () => {
           fileName: 'dummyDp',
           url: '',
         },
+        about: '',
         createdOn: Date.now(),
       });
 
