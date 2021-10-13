@@ -89,37 +89,44 @@ const Wrapper = styled.div`
   padding: ${({ fcPadding }) => fcPadding && fcPadding};
   margin: ${({ fcMargin }) => fcMargin && fcMargin};
   width: ${({ fcWidth }) => fcWidth && fcWidth};
+
   .fc_top {
     padding: 8px 0;
+
     .must {
       color: red;
       font-size: 1.25em;
     }
     label {
       font-size: ${({ labelFs }) => labelFs && labelFs};
-      color: #222;
+      color: #eeeeee;
     }
   }
+
   input {
-    background: #e9ebeb;
+    background: #dadbdb;
     border-radius: 5px;
     color: ${({ inputColor }) => inputColor && inputColor};
     font-size: ${({ inputFs }) => inputFs && inputFs};
     padding: ${({ inputPadding }) => inputPadding && inputPadding};
     width: ${({ inputW }) => inputW && inputW};
   }
+
   .pwd-label {
     justify-content: space-between;
   }
+
   .message {
     font-size: ${({ messageFs }) => messageFs && messageFs};
   }
+
   @media screen and (max-width: 700px) {
     input {
       padding: 8px 5px;
       font-size: 8em;
     }
   }
+
   @media screen and (max-width: 555px) {
     margin-bottom: 20px;
     .fc_top {

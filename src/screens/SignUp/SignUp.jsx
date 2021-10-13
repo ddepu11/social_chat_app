@@ -21,9 +21,7 @@ const SignUp = () => {
   return (
     <Wrapper className='w-960 flex'>
       <div className='hero'>
-        <h1 className='instagram'>Chitransh</h1>
-
-        <p className='saying'>Sign up to see photos from your friends.</p>
+        <h1 className='heading'>Sign up to Social Chat App</h1>
 
         <form className='flex' onSubmit={handleSubmit}>
           <div className='row'>
@@ -159,35 +157,20 @@ const Wrapper = styled.main`
   padding: 10px 0;
   flex-direction: column;
 
-  .instagram {
-    font-family: 'Cookie', cursive;
+  .heading {
     text-align: center;
-    font-size: 3.3em;
+    font-size: 1.5em;
     letter-spacing: 3px;
-    color: #233;
+    color: #ffffff;
   }
 
-  .instagram:hover {
-    cursor: default;
-  }
-
-  .saying {
-    text-align: center;
-    font-size: 1em;
-    color: #8f8e8e;
-    font-weight: 600;
-    max-width: 60%;
-    margin: 0 auto;
-    /* letter-spacing: 1px; */
-  }
-
-  .saying:hover {
+  .heading:hover {
     cursor: default;
   }
 
   .hero {
     padding: 10px 00px 30px;
-    width: 50%;
+    width: 40%;
     flex-direction: column;
     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
 
@@ -198,6 +181,7 @@ const Wrapper = styled.main`
 
     .row {
       width: 60%;
+      margin-bottom: 10px;
     }
 
     .terms {
@@ -216,7 +200,7 @@ const Wrapper = styled.main`
 
   .bottom {
     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
-    width: 50%;
+    width: 40%;
     padding: 10px 0;
     margin-top: 10px;
 

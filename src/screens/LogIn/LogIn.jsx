@@ -23,7 +23,7 @@ const LogIn = () => {
   return (
     <Wrapper className='w-960 flex'>
       <div className='hero'>
-        <h1 className='instagram'>Chitransh</h1>
+        <h1 className='heading'>Log in to Social Chat App</h1>
 
         <form className='flex' onSubmit={handleSubmit}>
           <div className='row'>
@@ -92,10 +92,10 @@ const LogIn = () => {
             fs='1em'
             width='57%'
             margin='20px 0 0'
-            bgColor='transparent'
             transform='scale(1.03)'
             bSh='rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px'
             handleClick={loginAsRandomUser}
+            bgColor='#4e4e4e'
           >
             <div className='center flex'>
               {/* <SupervisedUserCircleOutlinedIcon className='ic_twitter' /> */}
@@ -132,20 +132,20 @@ const Wrapper = styled.section`
   padding: 50px 0;
   flex-direction: column;
 
-  .instagram {
-    font-family: 'Cookie', cursive;
+  .heading {
     text-align: center;
-    font-size: 3.3em;
+    font-size: 1.5em;
     letter-spacing: 3px;
-    color: #233;
+    color: #ffffff;
   }
-  .instagram:hover {
+
+  .heading:hover {
     cursor: default;
   }
 
   .hero {
-    padding: 50px 00px 20px;
-    width: 50%;
+    padding: 20px 00px 30px;
+    width: 40%;
     flex-direction: column;
     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
 
@@ -156,6 +156,7 @@ const Wrapper = styled.section`
 
     .row {
       width: 60%;
+      margin-bottom: 12px;
     }
 
     .or_line {
@@ -166,17 +167,17 @@ const Wrapper = styled.section`
       .left_line {
         height: 2px;
         width: 40%;
-        background-color: #c5c5c5;
+        background-color: #ffffff;
       }
 
       span {
-        color: #686565;
+        color: #ffffff;
       }
 
       .right_line {
         height: 2px;
         width: 40%;
-        background-color: #c5c5c5;
+        background-color: #ffffff;
       }
 
       :hover {
@@ -186,11 +187,11 @@ const Wrapper = styled.section`
 
     .center {
       .ic_twitter {
-        color: #0d97e7;
+        color: #ffffff;
       }
 
       span {
-        color: #333;
+        color: #ffffff;
         margin-left: 10px;
       }
     }
@@ -198,9 +199,9 @@ const Wrapper = styled.section`
 
   .bottom {
     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
-    width: 50%;
+    width: 40%;
     padding: 10px 0;
-    margin-top: 10px;
+    margin-top: 15px;
 
     p {
       font-size: 0.9em;

@@ -20,12 +20,15 @@ const Wrapper = styled.main`
   height: 100vh;
   flex-direction: column;
   z-index: 20;
+
   h2 {
     padding: 10px 0;
     font-size: 1.15em;
-    color: #6b6969;
+    color: #ffffff;
     letter-spacing: 1px;
+    font-weight: 500;
   }
+
   .lds-roller {
     display: inline-block;
     position: relative;
@@ -43,7 +46,7 @@ const Wrapper = styled.main`
     width: 7px;
     height: 7px;
     border-radius: 50%;
-    background: #464646;
+    background: #ffffff;
     margin: -4px 0 0 -4px;
   }
   .lds-roller div:nth-child(1) {

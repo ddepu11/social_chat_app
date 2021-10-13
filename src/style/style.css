@@ -61,3 +61,18 @@ button:focus,
 input:focus {
   outline: 0;
 }
+
+.message {
+  transition: transform 0.5s ease;
+}
+
+.message.error {
+  color: red;
+}
+.message.success {
+  color: green;
+}
+
+.message.remove {
+  transform: scale(0) translateX(-200px);
+}
