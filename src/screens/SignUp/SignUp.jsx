@@ -116,17 +116,6 @@ const SignUp = () => {
           >
             Sign Up
           </Button>
-
-          <p className='terms'>
-            By signing up, you agree to our Terms , Data Policy and Cookies
-            Policy.
-          </p>
-
-          {/* <div className='or_line flex'>
-            <div className='left_line' />
-            <span>OR</span>
-            <div className='right_line' />
-          </div> */}
         </form>
       </div>
 
