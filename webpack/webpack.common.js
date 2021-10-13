@@ -16,6 +16,12 @@ module.exports = {
   module: {
     rules: [
       {
+        test: /\.css|scss$/i,
+        exclude: /\node_modules/,
+        use: ['style-loader', 'css-loader'],
+      },
+
+      {
         test: /\.jsx?$/,
         exclude: /node_modules/,
         use: {
@@ -24,12 +30,6 @@ module.exports = {
             presets: ['@babel/preset-env'],
           },
         },
-      },
-
-      {
-        test: /\.css$/i,
-        exclude: /node_modules/,
-        use: ['style-loader', 'css-loader'],
       },
 
       {
