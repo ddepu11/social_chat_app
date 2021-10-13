@@ -1,0 +1,26 @@
+{
+  "parser": "@babel/eslint-parser",
+
+  "extends": ["airbnb", "airbnb/hooks", "prettier"],
+
+  "env": {
+    "browser": true
+  },
+
+  "parserOptions": {
+    "ecmaVersion": 2020,
+    "sourceType": "module"
+  },
+
+  "rules": {
+    "react/react-in-jsx-scope": "off"
+  },
+
+  "ignorePatterns": "webpack",
+
+  "settings": {
+    "react": {
+      "version": "latest"
+    }
+  }
+}
