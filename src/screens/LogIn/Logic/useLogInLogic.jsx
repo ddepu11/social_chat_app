@@ -23,15 +23,12 @@ const useLogInLogic = () => {
 
   const { hasUserLoggedIn } = useSelector((state) => state.user.value);
 
-  useEffect(() => {
-    if (hasUserLoggedIn) {
-      history.push('/');
-    }
-
-    return () => {
+  useEffect(
+    () => () => {
       clearAllSetTimeoutOrSetInterval(setTimeOutId);
-    };
-  }, [hasUserLoggedIn, history]);
+    },
+    [hasUserLoggedIn, history]
+  );
 
   const logInUsingUserCredentials = () => {
     signInWithEmailAndPassword(
