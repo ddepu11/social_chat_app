@@ -21,7 +21,9 @@ const useAppLogic = () => {
   const { errorNotification, successNotification, infoNotification } =
     useNotification();
 
-  const { hasUserLoggedIn } = useSelector((state) => state.user.value);
+  const { hasUserLoggedIn, userLoading } = useSelector(
+    (state) => state.user.value
+  );
 
   const { message, success, error, info } = useSelector(
     (state) => state.notification.value
@@ -43,7 +45,6 @@ const useAppLogic = () => {
           // );
 
           dispatch(userLoggedIn({ id: doc.id, info: doc.data() }));
-          dispatch(userLoadingEnds());
         });
       } catch (err) {
         dispatch(notificationShowError({ msg: err.code.toString().slice(5) }));
@@ -95,7 +96,7 @@ const useAppLogic = () => {
     dispatch,
   ]);
 
-  return { hasUserLoggedIn };
+  return { hasUserLoggedIn, userLoading };
 };
 
 export default useAppLogic;
