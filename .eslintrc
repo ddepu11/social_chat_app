@@ -15,7 +15,8 @@
   "rules": {
     "react/react-in-jsx-scope": "off",
     "react/forbid-prop-types": ["warn", { "forbid": [] }],
-    "no-else-return": "off"
+    "no-else-return": "off",
+    "no-param-reassign": "off"
   },
 
   "ignorePatterns": "webpack",
