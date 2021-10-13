@@ -48,6 +48,9 @@ const App = () => {
   );
 };
 
-const Wrapper = styled.main``;
+const Wrapper = styled.div`
+  height: 100vh;
+  overflow: hidden;
+`;
 
 export default App;
