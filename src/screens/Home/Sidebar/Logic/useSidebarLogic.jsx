@@ -39,16 +39,11 @@ const useSidebarLogic = () => {
       });
   };
 
-  const createNewRoom = (e) => {
-    console.log(e.target);
-  };
-
   return {
     openProfileSidebar,
     profileSidebarRef,
     closeProfileSidebar,
     logOutUser,
-    createNewRoom,
   };
 };
 
