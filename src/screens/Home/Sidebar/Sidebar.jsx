@@ -7,6 +7,7 @@ import Button from '../../../components/Button';
 import useSidebarLogic from './Logic/useSidebarLogic';
 import UpdateFormField from '../../../components/UpdateFormField';
 import useDisplayPicLogic from './Logic/useDisplayPicLogic';
+import useUpdateUserDetails from './Logic/useUpdateUserDetails';
 
 const Sidebar = () => {
   const {
@@ -14,13 +15,8 @@ const Sidebar = () => {
     profileSidebarRef,
     closeProfileSidebar,
     logOutUser,
-    info,
-    handleInput,
     fullNameValidationMT,
-    credentials,
-    handleUpdate,
     userNameValidationMT,
-    cancelUpdate,
     aboutValidationMT,
     createNewRoom,
   } = useSidebarLogic();
@@ -33,6 +29,9 @@ const Sidebar = () => {
     removeDp,
     cancelChangeDp,
   } = useDisplayPicLogic();
+
+  const { handleInput, handleUpdate, cancelUpdate, credentials, info } =
+    useUpdateUserDetails();
 
   return (
     <>
