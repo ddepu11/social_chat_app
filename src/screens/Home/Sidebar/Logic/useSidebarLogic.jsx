@@ -2,6 +2,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { useRef, useState } from 'react';
 import { doc, updateDoc, getDoc } from 'firebase/firestore';
+
 import { authInstance, firestoreInstance } from '../../../../config/firebase';
 import {
   notificationShowError,
@@ -189,7 +190,7 @@ const useSidebarLogic = () => {
       const error = validateCredentials();
 
       if (!error) {
-         updateUserInfo();
+        updateUserInfo();
       }
     }
   };
@@ -200,6 +201,10 @@ const useSidebarLogic = () => {
       userName: info.userName,
       about: info.about,
     });
+  };
+
+  const createNewRoom = (e) => {
+    console.log(e.target);
   };
 
   return {
@@ -215,6 +220,7 @@ const useSidebarLogic = () => {
     aboutValidationMT,
     handleUpdate,
     cancelUpdate,
+    createNewRoom,
   };
 };
 
