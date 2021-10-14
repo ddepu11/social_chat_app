@@ -8,6 +8,7 @@ import useSidebarLogic from './Logic/useSidebarLogic';
 import UpdateFormField from '../../../components/UpdateFormField';
 import useDisplayPicLogic from './Logic/useDisplayPicLogic';
 import useUpdateUserDetails from './Logic/useUpdateUserDetails';
+import useCreateRoomLogic from './Logic/useCreateRoomLogic';
 
 const Sidebar = () => {
   const {
@@ -18,7 +19,6 @@ const Sidebar = () => {
     fullNameValidationMT,
     userNameValidationMT,
     aboutValidationMT,
-    createNewRoom,
   } = useSidebarLogic();
 
   const {
@@ -32,6 +32,8 @@ const Sidebar = () => {
 
   const { handleInput, handleUpdate, cancelUpdate, credentials, info } =
     useUpdateUserDetails();
+
+  const { showCRD, showCreateRoomDialog, hideCRD } = useCreateRoomLogic();
 
   return (
     <>
@@ -93,6 +95,30 @@ const Sidebar = () => {
         </ChangeDpDialog>
       )}
 
+      {showCreateRoomDialog && (
+        <CreateRoomDialog onClick={closeDialog} className='ChangeDpDialog'>
+          <div className='center_box flex'>
+            <h2 className='heading'>Create new room</h2>
+
+            <div className='btn cancel'>
+              <Button
+                type='button'
+                bSh=''
+                transform='scale(1)'
+                bgColor='transparent'
+                width='100%'
+                padding='14px 00'
+                color='#fdfdfd'
+                fWeight='400'
+                fs='0.9em'
+                handleClick={hideCRD}
+              >
+                Cancel
+              </Button>
+            </div>
+          </div>
+        </CreateRoomDialog>
+      )}
       <Wrapper>
         <div className='top flex'>
           <div className='to_left flex'>
@@ -119,8 +145,8 @@ const Sidebar = () => {
               bSh=''
               transform='scale(1)'
               fs='1.2em'
-              handleClick={createNewRoom}
               margin='0 20px 0 0'
+              handleClick={showCRD}
             >
               <AiOutlinePlus style={{ pointerEvents: 'none' }} />
             </Button>
@@ -436,6 +462,40 @@ const ChangeDpDialog = styled.div`
     .upload_label_btn:hover {
       cursor: pointer;
     }
+  }
+
+  .cancel {
+    border-bottom: none;
+  }
+`;
+
+const CreateRoomDialog = styled.div`
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.65);
+  display: grid;
+  place-content: center;
+  z-index: 15;
+
+  .center_box {
+    width: 29vw;
+    height: auto;
+    background-color: #494949;
+    border-radius: 12px;
+    flex-direction: column;
+    justify-content: flex-start;
+    color: #ffffff;
+    font-size: 0.95em;
+  }
+
+  .heading {
+    width: 100%;
+    font-size: 1.2em;
+    padding: 22px 0;
+    border-bottom: 1px solid #ffffff;
+    text-align: center;
   }
 
   .cancel {
