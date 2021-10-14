@@ -5,10 +5,23 @@ import { IoMdArrowRoundBack } from 'react-icons/io';
 import dummyDp from '../../../images/dummyDp.png';
 import Button from '../../../components/Button';
 import useSidebarLogic from './Logic/useSidebarLogic';
+import UpdateFormField from '../../../components/UpdateFormField';
 
 const Sidebar = () => {
-  const { openProfileSidebar, profileSidebarRef, closeProfileSidebar } =
-    useSidebarLogic();
+  const {
+    openProfileSidebar,
+    profileSidebarRef,
+    closeProfileSidebar,
+    logOutUser,
+    info,
+    handleInput,
+    fullNameValidationMT,
+    credentials,
+    handleUpdate,
+    userNameValidationMT,
+    cancelUpdate,
+    aboutValidationMT,
+  } = useSidebarLogic();
 
   const createNewRoom = (e) => {
     console.log(e.target);
@@ -25,7 +38,10 @@ const Sidebar = () => {
             handleClick={openProfileSidebar}
           >
             <div className='dp'>
-              <img src={dummyDp} alt='' />
+              <img
+                src={info && info.dp.url === '' ? dummyDp : info.dp.url}
+                alt=''
+              />
             </div>
           </Button>
 
@@ -49,7 +65,7 @@ const Sidebar = () => {
             bSh=''
             transform='scale(1)'
             fs='1.2em'
-            handleClick={createNewRoom}
+            handleClick={logOutUser}
             margin='0 5px 0 0'
           >
             <FiLogOut style={{ pointerEvents: 'none' }} />
@@ -71,7 +87,7 @@ const Sidebar = () => {
         </div>
       </div>
 
-      <div className='sidebar_cover show' ref={profileSidebarRef}>
+      <div className='sidebar_cover show flex' ref={profileSidebarRef}>
         <div className='cover_top flex'>
           <Button
             bgColor='transparent'
@@ -86,11 +102,79 @@ const Sidebar = () => {
           <h2 className='cover_heading'>Profile</h2>
         </div>
 
+        <div className='dp'>
+          <img
+            src={info && info.dp.url === '' ? dummyDp : info.dp.url}
+            alt='dp'
+          />
+        </div>
+
         <div className='details flex'>
-          <div className='dp'>
-            <img src={dummyDp} alt='dp' />
+          <div className='row'>
+            <UpdateFormField
+              wannaEdit={true}
+              heading='Full name'
+              htmlFor='fullName'
+              inputName='fullName'
+              type='text'
+              handleInput={handleInput}
+              refObj={fullNameValidationMT}
+              inputValue={credentials.fullName}
+            />
+          </div>
+
+          <div className='row'>
+            <UpdateFormField
+              wannaEdit={true}
+              heading='User name'
+              htmlFor='userName'
+              inputName='userName'
+              type='text'
+              handleInput={handleInput}
+              refObj={userNameValidationMT}
+              inputValue={credentials.userName}
+            />
+          </div>
+
+          <div className='row'>
+            <div className='flex' style={{ justifyContent: 'space-between' }}>
+              <label htmlFor='about'>About</label>
+              <p className='message' ref={aboutValidationMT} />
+            </div>
+
+            <textarea
+              name='about'
+              id='about'
+              rows='7'
+              value={credentials.about}
+              onChange={handleInput}
+            />
           </div>
         </div>
+
+        <Button
+          type='button'
+          width='92%'
+          margin='5px 0px'
+          padding='10px 0'
+          transform='scale(1)'
+          bgColor='#1a1919'
+          handleClick={handleUpdate}
+        >
+          Update
+        </Button>
+
+        <Button
+          type='button'
+          width='92%'
+          margin='1px 0px'
+          padding='10px 0'
+          transform='scale(1)'
+          bgColor='#1a1919'
+          handleClick={cancelUpdate}
+        >
+          Cancel
+        </Button>
       </div>
     </Wrapper>
   );
@@ -164,6 +248,8 @@ const Wrapper = styled.main`
     transform: translateX(-100%);
     opacity: 0;
     transition: transform 0.5s ease, opacity 0.4s ease;
+    flex-direction: column;
+    justify-content: flex-start;
 
     .cover_top {
       height: 15vh;
@@ -171,6 +257,7 @@ const Wrapper = styled.main`
       align-items: flex-end;
       padding: 10px;
       background: #323739;
+      width: 100%;
 
       .cover_heading {
         font-size: 1.2em;
@@ -179,16 +266,34 @@ const Wrapper = styled.main`
       }
     }
 
+    .dp {
+      margin-top: 15px;
+      width: 170px;
+      height: 170px;
+
+      img {
+        width: 100%;
+        height: 100%;
+      }
+
+      :hover {
+        cursor: pointer;
+      }
+    }
+
     .details {
-      padding: 20px 0;
+      margin-top: 20px;
+      flex-direction: column;
+      width: 100%;
+      overflow-y: scroll;
 
-      .dp {
-        width: 150px;
-        height: 150px;
+      .row {
+        padding: 2px 12px;
+        width: 100%;
 
-        img {
+        textarea {
           width: 100%;
-          height: 100%;
+          font-size: 0.9em;
         }
       }
     }

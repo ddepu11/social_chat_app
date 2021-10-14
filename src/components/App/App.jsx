@@ -1,16 +1,17 @@
-import { BrowserRouter as Router, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import styled from 'styled-components';
 import { ToastContainer } from 'react-toastify';
 import LogIn from '../../screens/LogIn/LogIn';
 import SignUp from '../../screens/SignUp/SignUp';
-import ProtectedRoute from '../ProtectedRoute';
+
 import 'react-toastify/dist/ReactToastify.css';
 import useAppLogic from './Logic/useAppLogic';
 import Home from '../../screens/Home/Home';
 import Loader from '../Loader';
+import ProtectedRoute from '../ProtectedRoute';
 
 const App = () => {
-  const { hasUserLoggedIn, userLoading } = useAppLogic();
+  const { userLoading, hasUserLoggedIn } = useAppLogic();
 
   if (userLoading) {
     return <Loader />;
@@ -22,25 +23,22 @@ const App = () => {
 
       <Router>
         <Switch>
+          {/* <Route path='/' exact>
+            <Home />
+          </Route> */}
+
+          <Route path='/login' exact>
+            <LogIn />
+          </Route>
+
+          <Route path='/signup' exact>
+            <SignUp />
+          </Route>
+
           <ProtectedRoute
             component={Home}
             path='/'
             isAuthenticated={hasUserLoggedIn}
-            redirectedTo='/login'
-          />
-
-          <ProtectedRoute
-            component={LogIn}
-            path='/login'
-            isAuthenticated={!hasUserLoggedIn}
-            redirectedTo='/'
-          />
-
-          <ProtectedRoute
-            component={SignUp}
-            path='/signup'
-            isAuthenticated={!hasUserLoggedIn}
-            redirectedTo='/'
           />
         </Switch>
       </Router>

@@ -29,13 +29,19 @@ const useSignUpLogic = () => {
     password: '',
   });
 
+  const mounted = useRef(true);
   const setTimeOutId = useRef(0);
 
-  useEffect(
-    () => () => clearAllSetTimeoutOrSetInterval(setTimeOutId),
+  useEffect(() => {
+    if (hasUserLoggedIn) {
+      history.push('/');
+    }
 
-    [history, hasUserLoggedIn]
-  );
+    return () => {
+      clearAllSetTimeoutOrSetInterval(setTimeOutId);
+      mounted.current = false;
+    };
+  }, [history, hasUserLoggedIn]);
 
   const validationMessageTags = {
     emailValidationMessageTag: useRef(null),
@@ -55,12 +61,14 @@ const useSignUpLogic = () => {
 
         dispatch(userLoadingEnds());
 
-        setUserCredentials({
-          email: '',
-          fullName: '',
-          userName: '',
-          password: '',
-        });
+        if (mounted.current) {
+          setUserCredentials({
+            email: '',
+            fullName: '',
+            userName: '',
+            password: '',
+          });
+        }
       })
       .catch((err) => {
         dispatch(notificationShowError({ msg: err.code.toString().slice(5) }));

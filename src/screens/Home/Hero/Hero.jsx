@@ -12,7 +12,7 @@ const Hero = () => {
 
 const Wrapper = styled.main`
   padding: 5px 5px;
-  border: 1px solid #00ff55da;
+  border: 1px dashed #00ff55da;
   width: 70%;
   height: 100%;
 `;

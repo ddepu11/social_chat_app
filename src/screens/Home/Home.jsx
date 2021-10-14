@@ -13,7 +13,6 @@ const Home = () => {
     </Wrapper>
   );
 };
-
 const Wrapper = styled.main`
   margin-top: 40px;
   height: 90vh;

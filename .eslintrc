@@ -16,14 +16,17 @@
     "react/react-in-jsx-scope": "off",
     "react/forbid-prop-types": ["warn", { "forbid": [] }],
     "no-else-return": "off",
-    "no-param-reassign": "off"
+    "no-param-reassign": "off",
+    "react/jsx-boolean-value": "off",
+    "no-lonely-if": "off",
+    "jsx-a11y/label-has-associated-control": "off"
   },
 
   "ignorePatterns": "webpack",
 
   "settings": {
     "react": {
-      "version": "latest"
+      "version": "17.0.2"
     }
   }
 }

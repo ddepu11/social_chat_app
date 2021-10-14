@@ -44,6 +44,8 @@ const useAppLogic = () => {
           //   notificationShowInfo({ msg: `Welcome back ${doc.data().fullName}` })
           // );
 
+          console.log(doc.data());
+
           dispatch(userLoggedIn({ id: doc.id, info: doc.data() }));
         });
       } catch (err) {
@@ -59,7 +61,9 @@ const useAppLogic = () => {
         fetchUserData(email);
       } else {
         authInstance.signOut();
+
         dispatch(userLoggedOut());
+
         dispatch(userLoadingEnds());
       }
     });
