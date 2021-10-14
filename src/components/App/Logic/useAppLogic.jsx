@@ -44,8 +44,6 @@ const useAppLogic = () => {
           //   notificationShowInfo({ msg: `Welcome back ${doc.data().fullName}` })
           // );
 
-          console.log(doc.data());
-
           dispatch(userLoggedIn({ id: doc.id, info: doc.data() }));
         });
       } catch (err) {
