@@ -4,8 +4,12 @@ import { FiLogOut } from 'react-icons/fi';
 import { IoMdArrowRoundBack } from 'react-icons/io';
 import dummyDp from '../../../images/dummyDp.png';
 import Button from '../../../components/Button';
+import useSidebarLogic from './Logic/useSidebarLogic';
 
 const Sidebar = () => {
+  const { openProfileSidebar, profileSidebarRef, closeProfileSidebar } =
+    useSidebarLogic();
+
   const createNewRoom = (e) => {
     console.log(e.target);
   };
@@ -14,9 +18,16 @@ const Sidebar = () => {
     <Wrapper>
       <div className='top flex'>
         <div className='to_left flex'>
-          <div className='dp'>
-            <img src={dummyDp} alt='' />
-          </div>
+          <Button
+            type='button'
+            bgColor='transparent'
+            transform='scale(1.05)'
+            handleClick={openProfileSidebar}
+          >
+            <div className='dp'>
+              <img src={dummyDp} alt='' />
+            </div>
+          </Button>
 
           <span className='user_name'>ddepu11</span>
         </div>
@@ -60,19 +71,25 @@ const Sidebar = () => {
         </div>
       </div>
 
-      <div className='sidebar_cover'>
+      <div className='sidebar_cover show' ref={profileSidebarRef}>
         <div className='cover_top flex'>
           <Button
             bgColor='transparent'
             bSh=''
             transform='scale(1)'
             fs='1.5em'
-            margin='0 20px 0 0'
+            handleClick={closeProfileSidebar}
           >
             <IoMdArrowRoundBack style={{ pointerEvents: 'none' }} />
           </Button>
 
           <h2 className='cover_heading'>Profile</h2>
+        </div>
+
+        <div className='details flex'>
+          <div className='dp'>
+            <img src={dummyDp} alt='dp' />
+          </div>
         </div>
       </div>
     </Wrapper>
@@ -144,16 +161,42 @@ const Wrapper = styled.main`
     bottom: 0;
     width: 100%;
     background: #333;
+    transform: translateX(-100%);
+    opacity: 0;
+    transition: transform 0.5s ease, opacity 0.4s ease;
 
     .cover_top {
-      border: 1px solid red;
       height: 15vh;
+      justify-content: flex-start;
+      align-items: flex-end;
+      padding: 10px;
+      background: #323739;
 
       .cover_heading {
         font-size: 1.2em;
         font-weight: 400;
+        padding: 0 0 6px 20px;
       }
     }
+
+    .details {
+      padding: 20px 0;
+
+      .dp {
+        width: 150px;
+        height: 150px;
+
+        img {
+          width: 100%;
+          height: 100%;
+        }
+      }
+    }
+  }
+
+  .sidebar_cover.show {
+    transform: translateX(0%);
+    opacity: 1;
   }
 `;
 
