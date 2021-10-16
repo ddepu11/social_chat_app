@@ -21,7 +21,7 @@ const SignUp = () => {
   return (
     <Wrapper className='w-960 flex'>
       <div className='hero'>
-        <h1 className='heading'>Sign up to Social Chat App</h1>
+        <h1 className='heading'>Sign up to Social Chat Rooms</h1>
 
         <form className='flex' onSubmit={handleSubmit}>
           <div className='row'>
