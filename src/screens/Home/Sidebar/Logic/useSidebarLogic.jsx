@@ -1,8 +1,8 @@
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { useRef } from 'react';
-
-import { authInstance } from '../../../../config/firebase';
+import { useEffect, useRef, useState } from 'react';
+import { collection, onSnapshot } from 'firebase/firestore';
+import { authInstance, firestoreInstance } from '../../../../config/firebase';
 import {
   notificationShowError,
   notificationShowInfo,
@@ -14,6 +14,27 @@ const useSidebarLogic = () => {
   const history = useHistory();
 
   // const { info } = useSelector((state) => state.user.value);
+  const [rooms, setRooms] = useState([]);
+
+  useEffect(() => {
+    const unsub = onSnapshot(collection(firestoreInstance, 'rooms'), (snap) => {
+      let index = 0;
+
+      const newRooms = [];
+
+      snap.forEach((item) => {
+        newRooms.push({ id: item.id, ...item.data() });
+        if (index === snap.size - 1) {
+          setRooms(newRooms);
+        }
+        index += 1;
+      });
+    });
+
+    return () => {
+      unsub(0);
+    };
+  }, [dispatch, rooms.length]);
 
   const profileSidebarRef = useRef(null);
 
@@ -44,6 +65,7 @@ const useSidebarLogic = () => {
     profileSidebarRef,
     closeProfileSidebar,
     logOutUser,
+    rooms,
   };
 };
 

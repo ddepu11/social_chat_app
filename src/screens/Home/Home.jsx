@@ -2,17 +2,14 @@ import styled from 'styled-components';
 import Hero from './Hero/Hero';
 import Sidebar from './Sidebar/Sidebar';
 
-const Home = () => {
-  console.log('Home');
+const Home = () => (
+  <Wrapper className='flex'>
+    <Sidebar />
 
-  return (
-    <Wrapper className='flex'>
-      <Sidebar />
+    <Hero />
+  </Wrapper>
+);
 
-      <Hero />
-    </Wrapper>
-  );
-};
 const Wrapper = styled.main`
   margin-top: 40px;
   height: 90vh;

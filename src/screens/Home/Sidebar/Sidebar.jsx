@@ -10,6 +10,7 @@ import useDisplayPicLogic from './Logic/useDisplayPicLogic';
 import useUpdateUserDetails from './Logic/useUpdateUserDetails';
 import useCreateRoomLogic from './Logic/useCreateRoomLogic';
 import dummyChat from '../../../images/dummyChat.jpg';
+import ChatRoom from '../../../components/ChatRoom';
 
 const Sidebar = () => {
   const {
@@ -18,6 +19,7 @@ const Sidebar = () => {
     closeProfileSidebar,
     logOutUser,
     aboutValidationMT,
+    rooms,
   } = useSidebarLogic();
 
   const {
@@ -50,6 +52,7 @@ const Sidebar = () => {
     roomImage,
     roomImageValidationMessageTag,
     roomValidationMessageTag,
+    loading,
   } = useCreateRoomLogic();
 
   return (
@@ -138,7 +141,7 @@ const Sidebar = () => {
                 </label>
 
                 <span className='text'>
-                  Select display picture
+                  Select room pic
                   <span style={{ color: '#dd0a0a', fontSize: '1.2em' }}>
                     {' '}
                     *
@@ -188,9 +191,16 @@ const Sidebar = () => {
                 Cancel
               </Button>
             </form>
+
+            {loading && (
+              <div className='loading'>
+                <h2>Loading...</h2>
+              </div>
+            )}
           </div>
         </CreateRoomDialog>
       )}
+
       <Wrapper>
         <div className='top flex'>
           <div className='to_left flex'>
@@ -236,22 +246,13 @@ const Sidebar = () => {
           </div>
         </div>
 
-        <div className='chat_rooms'>
-          <div className='room flex'>
-            <div className='room_left flex'>
-              <div className='room_img'>
-                <img src={dummyDp} alt='' />
-              </div>
-
-              <div className='room_name_and_last_message flex'>
-                <h3 className='room_name'>Chat Room 1</h3>
-                <p className='last_messge'>Hello there</p>
-              </div>
-            </div>
-
-            <span className='last_updated'>4:23</span>
+        {rooms.length !== 0 && (
+          <div className='chat_rooms'>
+            {rooms.map((item) => (
+              <ChatRoom key={item.id} room={item} />
+            ))}
           </div>
-        </div>
+        )}
 
         <div className='sidebar_cover  flex' ref={profileSidebarRef}>
           <div className='cover_top flex'>
@@ -381,45 +382,6 @@ const Wrapper = styled.main`
 
   .chat_rooms {
     margin-top: 20px;
-
-    .room {
-      justify-content: space-between;
-      padding: 10px 14px;
-
-      .room_img {
-        width: 40px;
-        height: 40px;
-
-        img {
-          width: 100%;
-          height: 100%;
-          object-fit: cover;
-          border-radius: 50%;
-        }
-      }
-      .room_name_and_last_message {
-        flex-direction: column;
-        align-items: flex-start;
-      }
-
-      .room_name {
-        font-weight: 500;
-        font-size: 0.9em;
-        margin-left: 10px;
-      }
-
-      p {
-        font-weight: 500;
-        font-size: 0.85em;
-        margin-left: 10px;
-        color: #949494;
-      }
-    }
-
-    .room:hover {
-      background: #333;
-      cursor: pointer;
-    }
   }
 
   .sidebar_cover {
@@ -575,6 +537,19 @@ const CreateRoomDialog = styled.div`
     justify-content: flex-start;
     color: #ffffff;
     font-size: 0.95em;
+    position: relative;
+
+    .loading {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 100%;
+      background: rgba(177, 177, 177, 0.8);
+      display: grid;
+      place-items: center;
+      color: #222;
+      font-size: 1.2em;
+    }
   }
 
   form {

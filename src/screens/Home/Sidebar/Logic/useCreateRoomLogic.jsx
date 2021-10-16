@@ -1,15 +1,28 @@
-// import { collection, addDoc } from 'firebase/firestore';
+import { useDispatch } from 'react-redux';
 import { useRef, useState } from 'react';
-// import { useDispatch } from 'react-redux';
-// import { firestoreInstance } from '../../../../config/firebase';
-// import { notificationShowError } from '../../../../features/notification';
-// import { userLoadingEnds } from '../../../../features/user';
+import { ref, getDownloadURL, uploadBytes } from 'firebase/storage';
+import { addDoc, collection } from 'firebase/firestore';
+
+import {
+  firestoreInstance,
+  storageInstance,
+} from '../../../../config/firebase';
+
 import setValidationMessage from '../../../../utils/setValidationMessage';
+import { notificationShowError } from '../../../../features/notification';
+import { userLoadingEnds } from '../../../../features/user';
 
 const useCreateRoomLogic = () => {
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
   // const { info } = useSelector((state) => state.user.value);
+  const [room, setRoom] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [roomImage, setRoomImage] = useState({
+    file: null,
+    preview: '',
+  });
+
   const [showCreateRoomDialog, setShowCreateRoomDialog] = useState(false);
 
   const showCRD = async () => {
@@ -18,13 +31,14 @@ const useCreateRoomLogic = () => {
 
   const hideCRD = async () => {
     setShowCreateRoomDialog(false);
-  };
 
-  const [roomImage, setRoomImage] = useState({
-    file: null,
-    preview: '',
-  });
-  const [room, setRoom] = useState('');
+    setRoom('');
+
+    setRoomImage({
+      file: null,
+      preview: '',
+    });
+  };
 
   const roomImageValidationMessageTag = useRef();
   const roomValidationMessageTag = useRef();
@@ -86,10 +100,49 @@ const useCreateRoomLogic = () => {
     return error;
   };
 
+  const saveRoomDocInFirestore = async (picUrl, picName) => {
+    try {
+      await addDoc(collection(firestoreInstance, 'rooms'), {
+        name: room,
+        pic: {
+          fileName: picName,
+          url: picUrl,
+        },
+      });
+      setLoading(false);
+      hideCRD();
+    } catch (err) {
+      dispatch(notificationShowError({ msg: err.code.toString().slice(5) }));
+      dispatch(userLoadingEnds());
+    }
+  };
+
+  const uploadRoomPic = async () => {
+    setLoading(true);
+    const picName = `Room_${room}__${Math.floor(Math.random() * Date.now())}`;
+
+    const roomImgRef = ref(
+      storageInstance,
+      `roomPictures/${picName}.${roomImage.file.type.split('/')[1]}`
+    );
+
+    try {
+      await uploadBytes(roomImgRef, roomImage.file);
+
+      const picUrl = await getDownloadURL(roomImgRef);
+      saveRoomDocInFirestore(picUrl, picName);
+    } catch (err) {
+      dispatch(notificationShowError({ msg: err.code.toString().slice(5) }));
+      dispatch(userLoadingEnds());
+    }
+  };
+
   const handleCreateRoom = () => {
     const error = validateImageAndRoom();
 
-    console.log(error);
+    if (!error) {
+      uploadRoomPic();
+    }
   };
 
   return {
@@ -103,6 +156,7 @@ const useCreateRoomLogic = () => {
     roomImage,
     roomImageValidationMessageTag,
     roomValidationMessageTag,
+    loading,
   };
 };
 

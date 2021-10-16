@@ -23,10 +23,6 @@ const App = () => {
 
       <Router>
         <Switch>
-          {/* <Route path='/' exact>
-            <Home />
-          </Route> */}
-
           <Route path='/login' exact>
             <LogIn />
           </Route>
