@@ -2,10 +2,22 @@ import styled from 'styled-components';
 import dummyDp from '../../../images/dummyDp.png';
 import useHeroLogic from './Logic/useHeroLogic';
 import Button from '../../../components/Button';
+import Loader from '../../../components/Loader';
 
 const Hero = () => {
-  const { info, hasUserLoggedIn, message, handleMessage, handleSendMessage } =
-    useHeroLogic();
+  const {
+    message,
+    handleMessage,
+    handleSendMessage,
+    roomDetails,
+    loading,
+    messages,
+    id,
+  } = useHeroLogic();
+
+  if (loading) {
+    return <Loader />;
+  }
 
   return (
     <Wrapper>
@@ -13,28 +25,42 @@ const Hero = () => {
         <div className='left flex'>
           <div className='dp'>
             <img
-              src={info && info.dp.url === '' ? dummyDp : info.dp.url}
+              src={
+                roomDetails && roomDetails.pic.url === ''
+                  ? dummyDp
+                  : roomDetails.pic.url
+              }
               alt=''
             />
           </div>
 
           <div className='name_and_last_seen'>
-            <h3>Room 1</h3>
-            <span className='last_name'>last seen at 12:7</span>
+            <h3>{roomDetails && roomDetails.name}</h3>
+            <span className='last_name'>
+              last seen at&nbsp;
+              {new Date(
+                messages[messages.length - 1]?.timestamp?.toDate()
+              ).toUTCString()}
+            </span>
           </div>
         </div>
       </div>
-
       <div className='chat_body'>
-        <p
-          className={`chat_message ${
-            !hasUserLoggedIn && 'chat_message_recieved'
-          }`}
-        >
-          Hello guys
-          <span className='user_name'>Someone name</span>
-          <span className='timestamp'>45:35</span>
-        </p>
+        {messages.length !== 0 &&
+          messages.map((item) => (
+            <p
+              key={item.id}
+              className={`chat_message ${
+                id === item.userId && 'chat_message_recieved'
+              }`}
+            >
+              {item.message}
+              <span className='user_name'>{item.name}</span>
+              <span className='timestamp'>
+                {new Date(item.timestamp?.toDate()).toUTCString()}
+              </span>
+            </p>
+          ))}
       </div>
 
       <div className='footer'>
@@ -60,7 +86,6 @@ const Hero = () => {
             fWeight='400'
             fs='0.9em'
             borderRadius='10px'
-            // handleClick={hideCRD}
           >
             Send
           </Button>
@@ -121,6 +146,7 @@ const Wrapper = styled.main`
       font-weight: 600;
       font-size: 0.9em;
       position: relative;
+      margin-bottom: 40px;
 
       .user_name {
         position: absolute;

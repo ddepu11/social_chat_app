@@ -1,34 +1,96 @@
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
+import { collection, orderBy, query, onSnapshot } from 'firebase/firestore';
 import PropTypes from 'prop-types';
+import { useDispatch } from 'react-redux';
 import dummyDp from '../images/dummyDp.png';
+import { firestoreInstance } from '../config/firebase';
+import { notificationShowError } from '../features/notification';
 
 const ChatRoom = ({ room }) => {
-  console.log('ChatRoom');
+  const dispatch = useDispatch();
+
+  const [messages, setMessages] = useState([]);
+
+  useEffect(() => {
+    let unsub;
+    const fetchData = async () => {
+      try {
+        const messagesRef = collection(
+          firestoreInstance,
+          'rooms',
+          room.id,
+          'messages'
+        );
+
+        const q = query(messagesRef, orderBy('timestamp', 'desc'));
+
+        unsub = onSnapshot(q, (snap) => {
+          let index = 0;
+          const newMessages = [];
+
+          snap.forEach((item) => {
+            newMessages.push({ id: item.id, ...item.data() });
+
+            if (snap.size - 1 === index) {
+              setMessages(newMessages);
+            }
+            index += 1;
+          });
+
+          if (snap.size === 0) {
+            setMessages(newMessages);
+          }
+        });
+      } catch (err) {
+        dispatch(notificationShowError({ msg: err.code.toString().slice(5) }));
+      }
+    };
+
+    fetchData();
+
+    return () => {
+      unsub();
+    };
+  }, [room.id, dispatch]);
 
   return (
-    <Wrapper className='flex' key={room.id} id={room.id}>
-      <div className='room_left flex'>
-        <div className='room_img'>
-          <img
-            src={room && room.pic.url === '' ? dummyDp : room.pic.url}
-            alt=''
-          />
+    <Wrapper key={room.id} id={room.id}>
+      <Link to={`/room/${room.id}`} className='room flex'>
+        <div className='room_left flex'>
+          <div className='room_img'>
+            <img
+              src={room && room.pic.url === '' ? dummyDp : room.pic.url}
+              alt=''
+            />
+          </div>
+
+          <div className='room_name_and_last_message flex'>
+            <h3 className='room_name'>{room.name}</h3>
+            <p className='last_messge'>{messages[0]?.message}</p>
+          </div>
         </div>
 
-        <div className='room_name_and_last_message flex'>
-          <h3 className='room_name'>{room.name}</h3>
-          <p className='last_messge'>Hello there</p>
-        </div>
-      </div>
-
-      <span className='last_updated'>4:23</span>
+        <span className='last_updated'>4:23</span>
+      </Link>
     </Wrapper>
   );
 };
 
 const Wrapper = styled.main`
-  justify-content: space-between;
-  padding: 10px 14px;
+  .room {
+    justify-content: space-between;
+    padding: 10px 14px;
+    transition: all 0.2s ease;
+
+    &:hover {
+      background: #444444;
+      p {
+        color: #ffffff;
+      }
+    }
+  }
 
   .room_img {
     width: 40px;
@@ -58,11 +120,6 @@ const Wrapper = styled.main`
     font-size: 0.85em;
     margin-left: 10px;
     color: #949494;
-  }
-
-  &:hover {
-    background: #333;
-    cursor: pointer;
   }
 `;
 

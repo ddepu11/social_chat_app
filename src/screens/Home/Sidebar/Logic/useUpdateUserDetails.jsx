@@ -161,6 +161,7 @@ const useUpdateUserDetails = () => {
       const error = validateCredentials();
 
       if (!error) {
+        console.log(credentials);
         updateUserInfo();
       }
     }
@@ -182,6 +183,7 @@ const useUpdateUserDetails = () => {
     info,
     userNameValidationMT,
     fullNameValidationMT,
+    aboutValidationMT,
   };
 };
 

@@ -1,3 +1,4 @@
+import { Route } from 'react-router-dom';
 import styled from 'styled-components';
 import Hero from './Hero/Hero';
 import Sidebar from './Sidebar/Sidebar';
@@ -6,7 +7,9 @@ const Home = () => (
   <Wrapper className='flex'>
     <Sidebar />
 
-    <Hero />
+    <Route path='/room/:roomId'>
+      <Hero />
+    </Route>
   </Wrapper>
 );
 

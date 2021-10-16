@@ -18,7 +18,6 @@ const Sidebar = () => {
     profileSidebarRef,
     closeProfileSidebar,
     logOutUser,
-    aboutValidationMT,
     rooms,
   } = useSidebarLogic();
 
@@ -38,6 +37,7 @@ const Sidebar = () => {
     credentials,
     info,
     userNameValidationMT,
+    aboutValidationMT,
     fullNameValidationMT,
   } = useUpdateUserDetails();
 
@@ -218,7 +218,7 @@ const Sidebar = () => {
               </div>
             </Button>
 
-            <span className='user_name'>ddepu11</span>
+            <span className='user_name'>{info.userName}</span>
           </div>
 
           <div className='btns'>
@@ -246,12 +246,14 @@ const Sidebar = () => {
           </div>
         </div>
 
-        {rooms.length !== 0 && (
+        {rooms.length !== 0 ? (
           <div className='chat_rooms'>
             {rooms.map((item) => (
               <ChatRoom key={item.id} room={item} />
             ))}
           </div>
+        ) : (
+          <h2 className='no_room'>There are no rooms You need to create one</h2>
         )}
 
         <div className='sidebar_cover  flex' ref={profileSidebarRef}>
@@ -382,6 +384,12 @@ const Wrapper = styled.main`
 
   .chat_rooms {
     margin-top: 20px;
+  }
+  .no_room {
+    font-size: 1em;
+    padding: 10px;
+    margin-top: 20px;
+    text-align: center;
   }
 
   .sidebar_cover {

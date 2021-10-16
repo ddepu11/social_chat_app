@@ -32,7 +32,7 @@ const useSidebarLogic = () => {
     });
 
     return () => {
-      unsub(0);
+      unsub();
     };
   }, [dispatch, rooms.length]);
 
