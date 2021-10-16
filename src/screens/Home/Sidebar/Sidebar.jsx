@@ -9,6 +9,7 @@ import UpdateFormField from '../../../components/UpdateFormField';
 import useDisplayPicLogic from './Logic/useDisplayPicLogic';
 import useUpdateUserDetails from './Logic/useUpdateUserDetails';
 import useCreateRoomLogic from './Logic/useCreateRoomLogic';
+import dummyChat from '../../../images/dummyChat.jpg';
 
 const Sidebar = () => {
   const {
@@ -16,8 +17,6 @@ const Sidebar = () => {
     profileSidebarRef,
     closeProfileSidebar,
     logOutUser,
-    fullNameValidationMT,
-    userNameValidationMT,
     aboutValidationMT,
   } = useSidebarLogic();
 
@@ -30,10 +29,28 @@ const Sidebar = () => {
     cancelChangeDp,
   } = useDisplayPicLogic();
 
-  const { handleInput, handleUpdate, cancelUpdate, credentials, info } =
-    useUpdateUserDetails();
+  const {
+    handleInput,
+    handleUpdate,
+    cancelUpdate,
+    credentials,
+    info,
+    userNameValidationMT,
+    fullNameValidationMT,
+  } = useUpdateUserDetails();
 
-  const { showCRD, showCreateRoomDialog, hideCRD } = useCreateRoomLogic();
+  const {
+    showCRD,
+    showCreateRoomDialog,
+    hideCRD,
+    room,
+    handleRoomInput,
+    handleCreateRoom,
+    handleRoomImage,
+    roomImage,
+    roomImageValidationMessageTag,
+    roomValidationMessageTag,
+  } = useCreateRoomLogic();
 
   return (
     <>
@@ -100,14 +117,69 @@ const Sidebar = () => {
           <div className='center_box flex'>
             <h2 className='heading'>Create new room</h2>
 
-            <div className='btn cancel'>
+            <form className='flex'>
+              <div className='room_image '>
+                <label className='preview'>
+                  <img
+                    src={
+                      roomImage.preview === '' ? dummyChat : roomImage.preview
+                    }
+                    alt='preview'
+                  />
+
+                  <input
+                    id='roomImage'
+                    type='file'
+                    name='displayPicture'
+                    style={{ display: 'none' }}
+                    accept='.png, .jpg, .jpeg'
+                    onChange={handleRoomImage}
+                  />
+                </label>
+
+                <span className='text'>
+                  Select display picture
+                  <span style={{ color: '#dd0a0a', fontSize: '1.2em' }}>
+                    {' '}
+                    *
+                  </span>
+                </span>
+              </div>
+
+              <p ref={roomImageValidationMessageTag} className='message' />
+
+              <label htmlFor='room' className='room_name'>
+                Room Name
+              </label>
+
+              <input type='text' value={room} onChange={handleRoomInput} />
+
+              <p ref={roomValidationMessageTag} className='message' />
+
               <Button
                 type='button'
                 bSh=''
                 transform='scale(1)'
-                bgColor='transparent'
                 width='100%'
-                padding='14px 00'
+                padding='5px 00'
+                margin='20px 0 0'
+                color='#fdfdfd'
+                fWeight='400'
+                fs='0.9em'
+                bgColor='#1b1b1b'
+                handleClick={handleCreateRoom}
+              >
+                Submit
+              </Button>
+
+              <Button
+                type='button'
+                bSh=''
+                transform='scale(1)'
+                bgColor='#1b1b1b'
+                width='100%'
+                padding='5px 00'
+                margin='10px 0 0'
                 color='#fdfdfd'
                 fWeight='400'
                 fs='0.9em'
@@ -115,7 +187,7 @@ const Sidebar = () => {
               >
                 Cancel
               </Button>
-            </div>
+            </form>
           </div>
         </CreateRoomDialog>
       )}
@@ -171,7 +243,10 @@ const Sidebar = () => {
                 <img src={dummyDp} alt='' />
               </div>
 
-              <h3 className='room_name'>Chat Room 1</h3>
+              <div className='room_name_and_last_message flex'>
+                <h3 className='room_name'>Chat Room 1</h3>
+                <p className='last_messge'>Hello there</p>
+              </div>
             </div>
 
             <span className='last_updated'>4:23</span>
@@ -321,11 +396,22 @@ const Wrapper = styled.main`
           border-radius: 50%;
         }
       }
+      .room_name_and_last_message {
+        flex-direction: column;
+        align-items: flex-start;
+      }
 
       .room_name {
         font-weight: 500;
         font-size: 0.9em;
         margin-left: 10px;
+      }
+
+      p {
+        font-weight: 500;
+        font-size: 0.85em;
+        margin-left: 10px;
+        color: #949494;
       }
     }
 
@@ -483,11 +569,57 @@ const CreateRoomDialog = styled.div`
     width: 29vw;
     height: auto;
     background-color: #494949;
-    border-radius: 12px;
+    border-radius: 5px;
     flex-direction: column;
     justify-content: flex-start;
     color: #ffffff;
     font-size: 0.95em;
+  }
+
+  form {
+    flex-direction: column;
+    padding: 30px 0;
+    width: 55%;
+
+    .preview {
+      width: 150px;
+      height: 150px;
+      display: block;
+
+      img {
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        object-fit: cover;
+      }
+    }
+
+    .room_image {
+      .text {
+        display: inline-block;
+        font-size: 0.9em;
+        padding: 0px 0 8px;
+      }
+    }
+
+    .room_name {
+      font-size: 1.1em;
+      font-weight: 400;
+      padding: 8px 0;
+      width: 100%;
+      margin-top: 4px;
+    }
+
+    input {
+      font-size: 1em;
+      padding: 4px 5px;
+      border-radius: 5px;
+      width: 100%;
+    }
+
+    .message {
+      width: 100%;
+    }
   }
 
   .heading {

@@ -180,6 +180,8 @@ const useUpdateUserDetails = () => {
     cancelUpdate,
     credentials,
     info,
+    userNameValidationMT,
+    fullNameValidationMT,
   };
 };
 
