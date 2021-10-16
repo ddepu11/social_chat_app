@@ -64,6 +64,23 @@ const useHeroLogic = () => {
   const [messages, setMessages] = useState([]);
 
   useEffect(() => {
+    setLoading(true);
+
+    let unsub;
+
+    if (roomId) {
+      unsub = onSnapshot(doc(firestoreInstance, 'rooms', roomId), (snap) => {
+        setRoomDetails({ id: snap.id, ...snap.data() });
+        setLoading(false);
+      });
+    }
+
+    return () => {
+      unsub();
+    };
+  }, [roomId]);
+
+  useEffect(() => {
     let unsub1;
 
     if (roomId) {
@@ -100,22 +117,6 @@ const useHeroLogic = () => {
       unsub1();
     };
   }, [roomId]);
-
-  useEffect(() => {
-    let unsub;
-
-    if (roomId) {
-      unsub = onSnapshot(doc(firestoreInstance, 'rooms', roomId), (snap) => {
-        setRoomDetails({ id: snap.id, ...snap.data() });
-        setLoading(false);
-      });
-    }
-
-    return () => {
-      setLoading(false);
-      unsub();
-    };
-  });
 
   return {
     id,
