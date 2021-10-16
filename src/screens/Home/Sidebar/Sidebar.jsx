@@ -356,6 +356,7 @@ const Wrapper = styled.main`
   .top {
     justify-content: space-between;
     padding: 14px 15px;
+    background: #323739;
 
     .dp {
       width: 40px;
