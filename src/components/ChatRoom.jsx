@@ -72,7 +72,11 @@ const ChatRoom = ({ room }) => {
           </div>
         </div>
 
-        <span className='last_updated'>4:23</span>
+        <span className='last_updated'>
+          {new Date(messages[0]?.timestamp?.toDate())
+            .toUTCString()
+            .slice(0, 25)}
+        </span>
       </Link>
     </Wrapper>
   );
@@ -89,6 +93,10 @@ const Wrapper = styled.main`
       p {
         color: #ffffff;
       }
+    }
+
+    .last_updated {
+      font-size: 0.6em;
     }
   }
 
@@ -117,7 +125,7 @@ const Wrapper = styled.main`
 
   p {
     font-weight: 500;
-    font-size: 0.85em;
+    font-size: 0.7em;
     margin-left: 10px;
     color: #949494;
   }

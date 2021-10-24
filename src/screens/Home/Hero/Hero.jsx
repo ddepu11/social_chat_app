@@ -96,8 +96,8 @@ const Hero = () => {
 };
 
 const Wrapper = styled.main`
-  border: 1px dashed #474747da;
-  width: 70%;
+  /* border: 1px dashed #474747da; */
+  width: 65%;
   height: 100%;
 
   .header {
@@ -120,13 +120,15 @@ const Wrapper = styled.main`
       }
 
       .name_and_last_seen {
-        margin-left: 15px;
+        margin-left: 18px;
 
         h3 {
           font-size: 1em;
+          font-weight: 500;
         }
+
         span {
-          font-size: 0.8em;
+          font-size: 0.7em;
           color: #bbbbbb;
         }
       }
@@ -143,10 +145,11 @@ const Wrapper = styled.main`
       padding: 5px 10px;
       width: fit-content;
       border-radius: 5px;
-      font-weight: 600;
+      font-weight: 400;
       font-size: 0.9em;
       position: relative;
-      margin-bottom: 40px;
+      margin-bottom: 60px;
+      border-top-left-radius: 0%;
 
       .user_name {
         position: absolute;
@@ -165,6 +168,7 @@ const Wrapper = styled.main`
     .chat_message_recieved {
       margin-left: auto;
       background: #056162;
+      border-top-right-radius: 0%;
     }
   }
 

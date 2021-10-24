@@ -351,10 +351,10 @@ const Sidebar = () => {
 };
 
 const Wrapper = styled.main`
-  width: 30%;
+  width: 35%;
   height: 100%;
-  border: 1px dashed #3b3b3b;
   position: relative;
+  /* border: 1px dashed #3b3b3b; */
 
   .top {
     justify-content: space-between;
@@ -384,7 +384,10 @@ const Wrapper = styled.main`
 
   .chat_rooms {
     margin-top: 20px;
+    overflow-y: scroll;
+    height: 87%;
   }
+
   .no_room {
     font-size: 1em;
     padding: 10px;

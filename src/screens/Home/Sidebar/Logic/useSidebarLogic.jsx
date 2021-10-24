@@ -19,11 +19,11 @@ const useSidebarLogic = () => {
   useEffect(() => {
     const unsub = onSnapshot(collection(firestoreInstance, 'rooms'), (snap) => {
       let index = 0;
-
       const newRooms = [];
 
       snap.forEach((item) => {
         newRooms.push({ id: item.id, ...item.data() });
+
         if (index === snap.size - 1) {
           setRooms(newRooms);
         }
@@ -34,7 +34,7 @@ const useSidebarLogic = () => {
     return () => {
       unsub();
     };
-  }, [dispatch, rooms.length]);
+  }, [dispatch]);
 
   const profileSidebarRef = useRef(null);
 
