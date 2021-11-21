@@ -10,9 +10,10 @@ const Hero = () => {
     handleMessage,
     handleSendMessage,
     roomDetails,
-    loading,
     messages,
     id,
+    loading,
+    bottomDivRef,
   } = useHeroLogic();
 
   if (loading) {
@@ -73,6 +74,8 @@ const Hero = () => {
               </span>
             </p>
           ))}
+
+        <div ref={bottomDivRef} />
       </div>
 
       <div className='footer'>
@@ -110,8 +113,8 @@ const Hero = () => {
 
 const Wrapper = styled.main`
   width: 65%;
-  height: 100%;
   border: 1px solid #474747da;
+  height: 100%;
 
   .header {
     background: #323739;
@@ -207,6 +210,8 @@ const Wrapper = styled.main`
 
   .footer {
     padding: 0px 12px;
+    height: 6%;
+    /* border: 1px solid red; */
 
     form {
       label {

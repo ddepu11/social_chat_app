@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import {
@@ -12,7 +12,6 @@ import {
 } from 'firebase/firestore';
 import { firestoreInstance } from '../../../../config/firebase';
 import { notificationShowError } from '../../../../features/notification';
-import { userLoadingEnds } from '../../../../features/user';
 
 const useHeroLogic = () => {
   const dispatch = useDispatch();
@@ -23,6 +22,8 @@ const useHeroLogic = () => {
 
   const [loading, setLoading] = useState(true);
   const { roomId } = useParams();
+
+  const bottomDivRef = useRef(null);
 
   const handleMessage = (e) => {
     setMessage(e.target.value);
@@ -36,11 +37,8 @@ const useHeroLogic = () => {
         createdOn: Date.now(),
         userId: id,
       });
-
-      setLoading(false);
     } catch (err) {
       dispatch(notificationShowError({ msg: err.code.toString().slice(5) }));
-      dispatch(userLoadingEnds());
     }
   };
 
@@ -50,8 +48,6 @@ const useHeroLogic = () => {
     if (!message) {
       dispatch(notificationShowError({ msg: 'Message is empty!' }));
     } else {
-      setLoading(true);
-
       saveMessageDoc();
 
       setMessage('');
@@ -110,13 +106,16 @@ const useHeroLogic = () => {
           if (snap.size - 1 === index) {
             setMessages(newMessages);
             setLoading(false);
+
+            bottomDivRef.current.scrollIntoView();
           }
+
           index += 1;
         });
 
         if (snap.size === 0) {
           setLoading(false);
-          setMessages(newMessages);
+          setMessages([]);
         }
       });
     }
@@ -136,6 +135,7 @@ const useHeroLogic = () => {
     loading,
     messages,
     btnActive,
+    bottomDivRef,
   };
 };
 
