@@ -11,11 +11,7 @@ import {
   firestoreInstance,
   storageInstance,
 } from '../../../../config/firebase';
-import {
-  updateInfo,
-  userLoadingBegins,
-  userLoadingEnds,
-} from '../../../../features/user';
+import { updateInfo } from '../../../../features/user';
 import {
   notificationShowError,
   notificationShowSuccess,
@@ -40,6 +36,8 @@ const useDisplayPicLogic = () => {
       cancelChangeDp();
     }
   };
+
+  const [dpLoading, setDpLoading] = useState(false);
 
   // If Display was never set
   const uploadPicAndUpdateUserDoc = async (imageToUpload) => {
@@ -69,6 +67,8 @@ const useDisplayPicLogic = () => {
 
       dispatch(updateInfo(userSnap.data()));
 
+      setDpLoading(false);
+
       dispatch(
         notificationShowSuccess({
           msg: 'Successfully changed display picture!',
@@ -76,7 +76,7 @@ const useDisplayPicLogic = () => {
       );
     } catch (err) {
       dispatch(notificationShowError({ msg: err.code.toString().slice(5) }));
-      dispatch(userLoadingEnds());
+      setDpLoading(false);
     }
   };
 
@@ -115,10 +115,12 @@ const useDisplayPicLogic = () => {
 
       dispatch(updateInfo(userSnap.data()));
 
+      setDpLoading(false);
+
       dispatch(notificationShowSuccess({ msg: 'Successfully changed the dp' }));
     } catch (err) {
       dispatch(notificationShowError({ msg: err.code.toString().slice(5) }));
-      dispatch(userLoadingEnds());
+      setDpLoading(false);
     }
   };
 
@@ -130,10 +132,10 @@ const useDisplayPicLogic = () => {
     const imageToUpload = Array.from(files)[0];
 
     if (info.dp.fileName === 'dummyDp') {
-      dispatch(userLoadingBegins());
+      setDpLoading(true);
       uploadPicAndUpdateUserDoc(imageToUpload);
     } else {
-      dispatch(userLoadingBegins());
+      setDpLoading(true);
       deletePreviousDpAndUploadNewOne(imageToUpload);
     }
   };
@@ -142,7 +144,7 @@ const useDisplayPicLogic = () => {
     cancelChangeDp();
     const dpRef = ref(storageInstance, `display_pictures/${info.dp.fileName}`);
 
-    dispatch(userLoadingBegins());
+    setDpLoading(true);
 
     try {
       await deleteObject(dpRef);
@@ -159,10 +161,12 @@ const useDisplayPicLogic = () => {
 
       dispatch(updateInfo(userSnap.data()));
 
+      setDpLoading(false);
+
       dispatch(notificationShowSuccess({ msg: 'Successfully removed  dp!' }));
     } catch (err) {
       dispatch(notificationShowError({ msg: err.code.toString().slice(5) }));
-      dispatch(userLoadingEnds());
+      setDpLoading(false);
     }
   };
 
@@ -173,6 +177,7 @@ const useDisplayPicLogic = () => {
     handleDpChange,
     removeDp,
     cancelChangeDp,
+    dpLoading,
   };
 };
 
