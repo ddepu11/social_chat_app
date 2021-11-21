@@ -134,9 +134,10 @@ const Wrapper = styled.section`
 
   .heading {
     text-align: center;
-    font-size: 1.5em;
     letter-spacing: 3px;
     color: #ffffff;
+    font-size: 1.15em;
+    font-weight: 400;
   }
 
   .heading:hover {
