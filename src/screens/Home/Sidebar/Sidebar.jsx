@@ -158,7 +158,12 @@ const Sidebar = () => {
                 Room Name
               </label>
 
-              <input type='text' value={room} onChange={handleRoomInput} />
+              <input
+                type='text'
+                value={room}
+                onChange={handleRoomInput}
+                placeholder='enter your room name'
+              />
 
               <p ref={roomValidationMessageTag} className='message' />
 
@@ -389,8 +394,12 @@ const Wrapper = styled.main`
     background: #323739;
 
     .dp {
-      width: 40px;
-      height: 40px;
+      width: 42px;
+      height: 42px;
+
+      border: 1px solid #b1b1b1;
+      border-radius: 50%;
+      padding: 1px;
 
       img {
         width: 100%;
@@ -475,6 +484,9 @@ const Wrapper = styled.main`
       width: 170px;
       height: 170px;
       position: relative;
+      border: 1px solid #b1b1b1;
+      border-radius: 50%;
+      padding: 2px;
 
       img {
         width: 100%;
@@ -647,6 +659,10 @@ const CreateRoomDialog = styled.div`
         height: 100%;
         border-radius: 50%;
         object-fit: cover;
+      }
+
+      :hover {
+        cursor: pointer;
       }
     }
 
