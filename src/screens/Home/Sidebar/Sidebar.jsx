@@ -419,7 +419,6 @@ const Wrapper = styled.main`
   }
 
   .chat_rooms {
-    margin-top: 00px;
     overflow-y: scroll;
     height: 90%;
 
@@ -636,11 +635,16 @@ const CreateRoomDialog = styled.div`
       top: 0;
       bottom: 0;
       width: 100%;
-      background: rgba(177, 177, 177, 0.8);
+      background: rgba(59, 59, 59, 0.7);
       display: grid;
       place-items: center;
-      color: #222;
-      font-size: 1.2em;
+
+      h2 {
+        color: #ffffff;
+        font-size: 1.3em;
+        font-weight: 400;
+        letter-spacing: 1px;
+      }
     }
   }
 
