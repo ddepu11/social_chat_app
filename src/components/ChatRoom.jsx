@@ -68,7 +68,10 @@ const ChatRoom = ({ room }) => {
 
           <div className='room_name_and_last_message flex'>
             <h3 className='room_name'>{room.name}</h3>
-            <p className='last_messge'>{messages[0]?.message}</p>
+            <p className='last_messge'>
+              {messages[0]?.message.slice(0, 26)}
+              {messages[0]?.message.length >= 26 && '...'}
+            </p>
           </div>
         </div>
 
