@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import dummyDp from '../../../images/dummyDp.png';
 import useHeroLogic from './Logic/useHeroLogic';
 import Button from '../../../components/Button';
-import Loader from '../../../components/Loader';
+import CircleLoader from '../../../components/CircleLoader';
 
 const Hero = () => {
   const {
@@ -17,7 +17,14 @@ const Hero = () => {
   } = useHeroLogic();
 
   if (loading) {
-    return <Loader />;
+    return (
+      <CircleLoader
+        wrapperMargin='0 330px'
+        wrapperH='90%'
+        cirH='100px'
+        cirW='100px'
+      />
+    );
   }
 
   return (
@@ -37,19 +44,22 @@ const Hero = () => {
 
           <div className='name_and_last_seen'>
             <h3>{roomDetails && roomDetails.name}</h3>
-            <span className='last_name'>
-              last seen at&nbsp;&nbsp;
-              {new Date(
-                messages[messages.length - 1]?.createdOn
-              ).toLocaleDateString('en-IN')}
-              &nbsp;&nbsp;&nbsp;
-              {new Date(
-                messages[messages.length - 1]?.createdOn
-              ).toLocaleTimeString('en-IN')}
-              {/* {new Date(
+
+            {messages.length > 0 && (
+              <span className='last_name'>
+                last seen at&nbsp;&nbsp;
+                {new Date(
+                  messages[messages.length - 1]?.createdOn
+                ).toLocaleDateString('en-IN')}
+                &nbsp;&nbsp;&nbsp;
+                {new Date(
+                  messages[messages.length - 1]?.createdOn
+                ).toLocaleTimeString('en-IN')}
+                {/* {new Date(
                 messages[messages.length - 1]?.createdOn?.toDate()
               ).toUTCString()} */}
-            </span>
+              </span>
+            )}
           </div>
         </div>
       </div>
@@ -115,6 +125,7 @@ const Wrapper = styled.main`
   width: 65%;
   border: 1px solid #474747da;
   height: 100%;
+  /* transition: all 1s ease; */
 
   .header {
     background: #323739;
