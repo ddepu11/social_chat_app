@@ -8,7 +8,7 @@ import {
   query,
   collection,
   addDoc,
-  serverTimestamp,
+  // serverTimestamp,
 } from 'firebase/firestore';
 import { firestoreInstance } from '../../../../config/firebase';
 import { notificationShowError } from '../../../../features/notification';
@@ -20,6 +20,7 @@ const useHeroLogic = () => {
   const { info, id } = useSelector((state) => state.user.value);
   const [message, setMessage] = useState('');
   const [btnActive, setBtnActive] = useState(false);
+
   const [loading, setLoading] = useState(true);
   const { roomId } = useParams();
 
@@ -32,9 +33,10 @@ const useHeroLogic = () => {
       await addDoc(collection(firestoreInstance, 'rooms', roomId, 'messages'), {
         message,
         name: info.fullName,
-        timestamp: serverTimestamp(),
+        createdOn: Date.now(),
         userId: id,
       });
+
       setLoading(false);
     } catch (err) {
       dispatch(notificationShowError({ msg: err.code.toString().slice(5) }));
@@ -44,14 +46,19 @@ const useHeroLogic = () => {
 
   const handleSendMessage = (e) => {
     e.preventDefault();
+
     if (!message) {
-      alert('Please write something');
+      dispatch(notificationShowError({ msg: 'Message is empty!' }));
     } else {
+      setLoading(true);
+
       saveMessageDoc();
+
       setMessage('');
     }
   };
 
+  // Disable / Enable send message button
   useEffect(() => {
     if (message) {
       setBtnActive(true);
@@ -63,6 +70,7 @@ const useHeroLogic = () => {
   const [roomDetails, setRoomDetails] = useState(null);
   const [messages, setMessages] = useState([]);
 
+  // Fetching Rooms
   useEffect(() => {
     setLoading(true);
 
@@ -80,13 +88,14 @@ const useHeroLogic = () => {
     };
   }, [roomId]);
 
+  // Fetching Room's messages
   useEffect(() => {
     let unsub1;
 
     if (roomId) {
       const q = query(
         collection(firestoreInstance, 'rooms', roomId, 'messages'),
-        orderBy('timestamp', 'asc')
+        orderBy('createdOn', 'asc')
       );
 
       unsub1 = onSnapshot(q, (snap) => {
