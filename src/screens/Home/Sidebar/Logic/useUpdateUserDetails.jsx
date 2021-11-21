@@ -1,16 +1,16 @@
 import { useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { doc, updateDoc, getDoc } from 'firebase/firestore';
+import PropTypes from 'prop-types';
 import { firestoreInstance } from '../../../../config/firebase';
+import { updateInfo } from '../../../../features/user';
 import {
-  updateInfo,
-  userLoadingBegins,
-  userLoadingEnds,
-} from '../../../../features/user';
-import { notificationShowError } from '../../../../features/notification';
+  notificationShowError,
+  notificationShowSuccess,
+} from '../../../../features/notification';
 import setValidationMessage from '../../../../utils/setValidationMessage';
 
-const useUpdateUserDetails = () => {
+const useUpdateUserDetails = (closeProfileSidebar) => {
   const dispatch = useDispatch();
 
   const { info, id } = useSelector((state) => state.user.value);
@@ -32,8 +32,10 @@ const useUpdateUserDetails = () => {
     setUserCredentials({ ...credentials, [name]: value });
   };
 
+  const [userInfoLoading, setUserInfoLoading] = useState(false);
+
   const updateUserInfo = async () => {
-    dispatch(userLoadingBegins());
+    setUserInfoLoading(true);
 
     const userRef = doc(firestoreInstance, 'users', id);
 
@@ -45,9 +47,15 @@ const useUpdateUserDetails = () => {
       userSnap.data();
 
       dispatch(updateInfo(userSnap.data()));
+
+      setUserInfoLoading(false);
+
+      dispatch(
+        notificationShowSuccess({ msg: 'Successfully updated user info.' })
+      );
     } catch (err) {
       dispatch(notificationShowError({ msg: err.code.toString().slice(5) }));
-      dispatch(userLoadingEnds());
+      setUserInfoLoading(false);
     }
   };
 
@@ -161,7 +169,6 @@ const useUpdateUserDetails = () => {
       const error = validateCredentials();
 
       if (!error) {
-        console.log(credentials);
         updateUserInfo();
       }
     }
@@ -173,6 +180,8 @@ const useUpdateUserDetails = () => {
       userName: info.userName,
       about: info.about,
     });
+
+    closeProfileSidebar();
   };
 
   return {
@@ -184,7 +193,15 @@ const useUpdateUserDetails = () => {
     userNameValidationMT,
     fullNameValidationMT,
     aboutValidationMT,
+    userInfoLoading,
   };
 };
 
+useUpdateUserDetails.propTypes = {
+  closeProfileSidebar: PropTypes.func.isRequired,
+};
+
+useUpdateUserDetails.defaultProps = {
+  closeProfileSidebar: () => {},
+};
 export default useUpdateUserDetails;
