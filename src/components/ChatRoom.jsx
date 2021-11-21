@@ -72,11 +72,13 @@ const ChatRoom = ({ room }) => {
           </div>
         </div>
 
-        <span className='last_updated'>
-          {new Date(messages[0]?.timestamp?.toDate())
-            .toUTCString()
-            .slice(0, 25)}
-        </span>
+        {messages.length > 0 && (
+          <span className='last_updated'>
+            {new Date(messages[0]?.timestamp?.toDate())
+              .toUTCString()
+              .slice(0, 25)}
+          </span>
+        )}
       </Link>
     </Wrapper>
   );
