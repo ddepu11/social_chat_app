@@ -15,9 +15,9 @@ import { userLoadingEnds } from '../../../../features/user';
 const useCreateRoomLogic = () => {
   const dispatch = useDispatch();
 
-  // const { info } = useSelector((state) => state.user.value);
   const [room, setRoom] = useState('');
   const [loading, setLoading] = useState(false);
+
   const [roomImage, setRoomImage] = useState({
     file: null,
     preview: '',
@@ -77,7 +77,7 @@ const useCreateRoomLogic = () => {
       error = true;
     }
 
-    if (room.length < 2) {
+    if (room.trim().length < 2) {
       setValidationMessage(
         'room name is too short!',
         'error',
