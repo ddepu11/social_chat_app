@@ -24,7 +24,7 @@ const ChatRoom = ({ room }) => {
           'messages'
         );
 
-        const q = query(messagesRef, orderBy('timestamp', 'desc'));
+        const q = query(messagesRef, orderBy('createdOn', 'desc'));
 
         unsub = onSnapshot(q, (snap) => {
           let index = 0;
@@ -74,9 +74,9 @@ const ChatRoom = ({ room }) => {
 
         {messages.length > 0 && (
           <span className='last_updated'>
-            {new Date(messages[0]?.timestamp?.toDate())
-              .toUTCString()
-              .slice(0, 25)}
+            {new Date(messages[0]?.createdOn).toLocaleDateString('en-IN')}
+            &nbsp;&nbsp;&nbsp;
+            {new Date(messages[0]?.createdOn).toLocaleTimeString('en-IN')}
           </span>
         )}
       </Link>
