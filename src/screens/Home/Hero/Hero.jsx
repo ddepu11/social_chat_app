@@ -90,12 +90,12 @@ const Hero = () => {
 
       <div className='footer'>
         <form onSubmit={handleSendMessage}>
-          <label htmlFor='message'>message:</label>
+          <label htmlFor='message'>Message</label>
 
           <input
             type='text'
             id='message'
-            placeholder='wirite your message'
+            placeholder='write your message here...'
             value={message}
             onChange={handleMessage}
           />
@@ -176,7 +176,7 @@ const Wrapper = styled.main`
       font-size: 0.9em;
       position: relative;
       margin-bottom: 60px;
-      border-top-left-radius: 0%;
+      /* border-top-left-radius: 0%; */
 
       .user_name {
         position: absolute;
