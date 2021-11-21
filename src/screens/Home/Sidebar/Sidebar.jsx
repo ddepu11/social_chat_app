@@ -41,6 +41,7 @@ const Sidebar = () => {
     userNameValidationMT,
     aboutValidationMT,
     fullNameValidationMT,
+    userInfoLoading,
   } = useUpdateUserDetails(closeProfileSidebar);
 
   const {
@@ -334,31 +335,42 @@ const Sidebar = () => {
             </div>
           </div>
 
-          <Button
-            type='button'
-            width='92%'
-            margin='5px 0px'
-            padding='5px 0'
-            transform='scale(1)'
-            bgColor='#1a1919'
-            handleClick={handleUpdate}
-            fontSize='0.8em'
-          >
-            Update
-          </Button>
+          {userInfoLoading ? (
+            <CircleLoader
+              wrapperMargin='0 0'
+              wrapperH='8%'
+              cirH='20px'
+              cirW='20px'
+            />
+          ) : (
+            <>
+              <Button
+                type='button'
+                width='92%'
+                margin='5px 0px'
+                padding='5px 0'
+                transform='scale(1)'
+                bgColor='#1a1919'
+                handleClick={handleUpdate}
+                fontSize='0.8em'
+              >
+                Update
+              </Button>
 
-          <Button
-            type='button'
-            width='92%'
-            margin='1px 0px'
-            padding='5px 0'
-            transform='scale(1)'
-            bgColor='#1a1919'
-            handleClick={cancelUpdate}
-            fontSize='0.8em'
-          >
-            Cancel
-          </Button>
+              <Button
+                type='button'
+                width='92%'
+                margin='1px 0px'
+                padding='5px 0'
+                transform='scale(1)'
+                bgColor='#1a1919'
+                handleClick={cancelUpdate}
+                fontSize='0.8em'
+              >
+                Cancel
+              </Button>
+            </>
+          )}
         </div>
       </Wrapper>
     </>
