@@ -37,14 +37,22 @@ const Hero = () => {
           <div className='name_and_last_seen'>
             <h3>{roomDetails && roomDetails.name}</h3>
             <span className='last_name'>
-              last seen at&nbsp;
+              last seen at&nbsp;&nbsp;
               {new Date(
-                messages[messages.length - 1]?.timestamp?.toDate()
-              ).toUTCString()}
+                messages[messages.length - 1]?.createdOn
+              ).toLocaleDateString('en-IN')}
+              &nbsp;&nbsp;&nbsp;
+              {new Date(
+                messages[messages.length - 1]?.createdOn
+              ).toLocaleTimeString('en-IN')}
+              {/* {new Date(
+                messages[messages.length - 1]?.createdOn?.toDate()
+              ).toUTCString()} */}
             </span>
           </div>
         </div>
       </div>
+
       <div className='chat_body'>
         {messages.length !== 0 &&
           messages.map((item) => (
@@ -55,9 +63,13 @@ const Hero = () => {
               }`}
             >
               {item.message}
+
               <span className='user_name'>{item.name}</span>
+
               <span className='timestamp'>
-                {new Date(item.timestamp?.toDate()).toUTCString()}
+                {new Date(item.createdOn).toLocaleDateString('en-IN')}
+                &nbsp;&nbsp;&nbsp;
+                {new Date(item.createdOn).toLocaleTimeString('en-IN')}
               </span>
             </p>
           ))}
@@ -66,6 +78,7 @@ const Hero = () => {
       <div className='footer'>
         <form onSubmit={handleSendMessage}>
           <label htmlFor='message'>message:</label>
+
           <input
             type='text'
             id='message'
@@ -79,13 +92,13 @@ const Hero = () => {
             bSh=''
             transform='scale(1)'
             bgColor='#1b1b1b'
-            width='10%'
+            width='12%'
             padding='5px 00'
             margin='0px 0 0 10px'
             color='#fdfdfd'
             fWeight='400'
             fs='0.9em'
-            borderRadius='10px'
+            borderRadius='5px'
           >
             Send
           </Button>
@@ -96,9 +109,9 @@ const Hero = () => {
 };
 
 const Wrapper = styled.main`
-  /* border: 1px dashed #474747da; */
   width: 65%;
   height: 100%;
+  border: 1px solid #474747da;
 
   .header {
     background: #323739;
@@ -170,6 +183,26 @@ const Wrapper = styled.main`
       background: #056162;
       border-top-right-radius: 0%;
     }
+
+    /* width */
+    ::-webkit-scrollbar {
+      width: 10px;
+    }
+
+    /* Track */
+    ::-webkit-scrollbar-track {
+      background: #f1f1f1;
+    }
+
+    /* Handle */
+    ::-webkit-scrollbar-thumb {
+      background: #888;
+    }
+
+    /* Handle on hover */
+    ::-webkit-scrollbar-thumb:hover {
+      background: #555;
+    }
   }
 
   .footer {
@@ -183,7 +216,7 @@ const Wrapper = styled.main`
 
       input {
         padding: 5px 10px;
-        border-radius: 10px;
+        border-radius: 2px;
         width: 72%;
         margin-left: 15px;
       }
