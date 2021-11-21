@@ -11,6 +11,7 @@ import useUpdateUserDetails from './Logic/useUpdateUserDetails';
 import useCreateRoomLogic from './Logic/useCreateRoomLogic';
 import dummyChat from '../../../images/dummyChat.jpg';
 import ChatRoom from '../../../components/ChatRoom';
+import CircleLoader from '../../../components/CircleLoader';
 
 const Sidebar = () => {
   const {
@@ -28,6 +29,7 @@ const Sidebar = () => {
     handleDpChange,
     removeDp,
     cancelChangeDp,
+    dpLoading,
   } = useDisplayPicLogic();
 
   const {
@@ -39,7 +41,7 @@ const Sidebar = () => {
     userNameValidationMT,
     aboutValidationMT,
     fullNameValidationMT,
-  } = useUpdateUserDetails();
+  } = useUpdateUserDetails(closeProfileSidebar);
 
   const {
     showCRD,
@@ -218,7 +220,7 @@ const Sidebar = () => {
               </div>
             </Button>
 
-            <span className='user_name'>{info.userName}</span>
+            <span className='user_name'>{info.fullName}</span>
           </div>
 
           <div className='btns'>
@@ -253,7 +255,9 @@ const Sidebar = () => {
             ))}
           </div>
         ) : (
-          <h2 className='no_room'>There are no rooms You need to create one</h2>
+          <h2 className='no_room'>
+            Sorry there are no rooms You need to create one.
+          </h2>
         )}
 
         <div className='sidebar_cover  flex' ref={profileSidebarRef}>
@@ -271,12 +275,21 @@ const Sidebar = () => {
             <h2 className='cover_heading'>Profile</h2>
           </div>
 
-          <div className='dp' onClick={openChangeDpDialog}>
-            <img
-              src={info && info.dp.url === '' ? dummyDp : info.dp.url}
-              alt='dp'
+          {dpLoading ? (
+            <CircleLoader
+              wrapperMargin='0 0'
+              wrapperH='32%'
+              cirH='30px'
+              cirW='30px'
             />
-          </div>
+          ) : (
+            <div className='dp' onClick={openChangeDpDialog}>
+              <img
+                src={info && info.dp.url === '' ? dummyDp : info.dp.url}
+                alt='dp'
+              />
+            </div>
+          )}
 
           <div className='details flex'>
             <div className='row' style={{ marginTop: '20px' }}>
@@ -325,10 +338,11 @@ const Sidebar = () => {
             type='button'
             width='92%'
             margin='5px 0px'
-            padding='10px 0'
+            padding='5px 0'
             transform='scale(1)'
             bgColor='#1a1919'
             handleClick={handleUpdate}
+            fontSize='0.8em'
           >
             Update
           </Button>
@@ -337,10 +351,11 @@ const Sidebar = () => {
             type='button'
             width='92%'
             margin='1px 0px'
-            padding='10px 0'
+            padding='5px 0'
             transform='scale(1)'
             bgColor='#1a1919'
             handleClick={cancelUpdate}
+            fontSize='0.8em'
           >
             Cancel
           </Button>
@@ -354,7 +369,7 @@ const Wrapper = styled.main`
   width: 35%;
   height: 100%;
   position: relative;
-  /* border: 1px dashed #3b3b3b; */
+  border: 1px solid #3b3b3b;
 
   .top {
     justify-content: space-between;
@@ -383,16 +398,36 @@ const Wrapper = styled.main`
   }
 
   .chat_rooms {
-    margin-top: 20px;
+    margin-top: 00px;
     overflow-y: scroll;
-    height: 87%;
+    height: 90%;
+
+    /* width */
+    ::-webkit-scrollbar {
+      width: 10px;
+    }
+
+    /* Track */
+    ::-webkit-scrollbar-track {
+      background: #f1f1f1;
+    }
+
+    /* Handle */
+    ::-webkit-scrollbar-thumb {
+      background: #888;
+    }
+
+    /* Handle on hover */
+    ::-webkit-scrollbar-thumb:hover {
+      background: #555;
+    }
   }
 
   .no_room {
-    font-size: 1em;
-    padding: 10px;
-    margin-top: 20px;
+    margin-top: 50px;
     text-align: center;
+    font-size: 0.9em;
+    font-weight: 400;
   }
 
   .sidebar_cover {
@@ -406,6 +441,7 @@ const Wrapper = styled.main`
     transition: transform 0.5s ease, opacity 0.4s ease;
     flex-direction: column;
     justify-content: flex-start;
+    pointer-events: none;
 
     .cover_top {
       height: 15vh;
@@ -467,12 +503,33 @@ const Wrapper = styled.main`
           padding: 5px;
         }
       }
+
+      /* width */
+      ::-webkit-scrollbar {
+        width: 10px;
+      }
+
+      /* Track */
+      ::-webkit-scrollbar-track {
+        background: #f1f1f1;
+      }
+
+      /* Handle */
+      ::-webkit-scrollbar-thumb {
+        background: #888;
+      }
+
+      /* Handle on hover */
+      ::-webkit-scrollbar-thumb:hover {
+        background: #555;
+      }
     }
   }
 
   .sidebar_cover.show {
     transform: translateX(0%);
     opacity: 1;
+    pointer-events: auto;
   }
 `;
 
