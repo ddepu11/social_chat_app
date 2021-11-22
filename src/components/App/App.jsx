@@ -18,7 +18,7 @@ const App = () => {
   }
 
   return (
-    <Wrapper className='w-1050'>
+    <Wrapper className='w-1150'>
       <ToastContainer />
 
       <Router>
