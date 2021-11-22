@@ -8,10 +8,10 @@ import {
   query,
   collection,
   addDoc,
-  // serverTimestamp,
 } from 'firebase/firestore';
 import { firestoreInstance } from '../../../../config/firebase';
 import { notificationShowError } from '../../../../features/notification';
+import { setRoomId } from '../../../../features/room';
 
 const useHeroLogic = () => {
   const dispatch = useDispatch();
@@ -73,6 +73,8 @@ const useHeroLogic = () => {
     let unsub;
 
     if (roomId) {
+      dispatch(setRoomId(roomId));
+
       unsub = onSnapshot(doc(firestoreInstance, 'rooms', roomId), (snap) => {
         setRoomDetails({ id: snap.id, ...snap.data() });
         setLoading(false);
@@ -82,7 +84,7 @@ const useHeroLogic = () => {
     return () => {
       unsub();
     };
-  }, [roomId]);
+  }, [roomId, dispatch]);
 
   // Fetching Room's messages
   useEffect(() => {
