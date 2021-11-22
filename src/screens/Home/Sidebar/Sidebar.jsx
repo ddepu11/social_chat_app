@@ -429,12 +429,12 @@ const Wrapper = styled.main`
 
     /* width */
     ::-webkit-scrollbar {
-      width: 10px;
+      width: 5px;
     }
 
     /* Track */
     ::-webkit-scrollbar-track {
-      background: #c0c0c0;
+      background: transparent;
     }
 
     /* Handle */
@@ -534,12 +534,12 @@ const Wrapper = styled.main`
 
       /* width */
       ::-webkit-scrollbar {
-        width: 10px;
+        width: 5px;
       }
 
       /* Track */
       ::-webkit-scrollbar-track {
-        background: #c0c0c0;
+        background: transparent;
       }
 
       /* Handle */
