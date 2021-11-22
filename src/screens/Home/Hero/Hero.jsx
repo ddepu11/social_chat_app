@@ -205,12 +205,12 @@ const Wrapper = styled.main`
 
     /* Track */
     ::-webkit-scrollbar-track {
-      background: #f1f1f1;
+      background: #c0c0c0;
     }
 
     /* Handle */
     ::-webkit-scrollbar-thumb {
-      background: #888;
+      background: #323739;
     }
 
     /* Handle on hover */
