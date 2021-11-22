@@ -8,7 +8,7 @@ import dummyDp from '../images/dummyDp.png';
 import { firestoreInstance } from '../config/firebase';
 import { notificationShowError } from '../features/notification';
 
-const ChatRoom = ({ room }) => {
+const ChatRoom = ({ room, currentRoomId }) => {
   const dispatch = useDispatch();
 
   const [messages, setMessages] = useState([]);
@@ -56,7 +56,7 @@ const ChatRoom = ({ room }) => {
   }, [room.id, dispatch]);
 
   return (
-    <Wrapper key={room.id} id={room.id}>
+    <Wrapper key={room.id} id={room.id} isActive={currentRoomId === room.id}>
       <Link to={`/room/${room.id}`} className='room flex'>
         <div className='room_left flex'>
           <div className='room_img'>
@@ -100,6 +100,11 @@ const Wrapper = styled.main`
       }
     }
 
+    background: ${({ isActive }) => isActive && '#444444'};
+    p {
+      color: ${({ isActive }) => isActive && '#ffffff'};
+    }
+
     .last_updated {
       font-size: 0.6em;
     }
@@ -138,6 +143,11 @@ const Wrapper = styled.main`
 
 ChatRoom.propTypes = {
   room: PropTypes.object.isRequired,
+  currentRoomId: PropTypes.string,
+};
+
+ChatRoom.defaultProps = {
+  currentRoomId: '',
 };
 
 export default ChatRoom;
