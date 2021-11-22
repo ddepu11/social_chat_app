@@ -20,6 +20,7 @@ const Sidebar = () => {
     closeProfileSidebar,
     logOutUser,
     rooms,
+    currentRoomId,
   } = useSidebarLogic();
 
   const {
@@ -257,7 +258,11 @@ const Sidebar = () => {
         {rooms.length !== 0 ? (
           <div className='chat_rooms'>
             {rooms.map((item) => (
-              <ChatRoom key={item.id} room={item} />
+              <ChatRoom
+                key={item.id}
+                room={item}
+                currentRoomId={currentRoomId}
+              />
             ))}
           </div>
         ) : (
@@ -429,12 +434,12 @@ const Wrapper = styled.main`
 
     /* Track */
     ::-webkit-scrollbar-track {
-      background: #f1f1f1;
+      background: #c0c0c0;
     }
 
     /* Handle */
     ::-webkit-scrollbar-thumb {
-      background: #888;
+      background: #323739;
     }
 
     /* Handle on hover */
@@ -534,12 +539,12 @@ const Wrapper = styled.main`
 
       /* Track */
       ::-webkit-scrollbar-track {
-        background: #f1f1f1;
+        background: #c0c0c0;
       }
 
       /* Handle */
       ::-webkit-scrollbar-thumb {
-        background: #888;
+        background: #8a8a8a;
       }
 
       /* Handle on hover */
