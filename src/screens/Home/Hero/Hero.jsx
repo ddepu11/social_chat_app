@@ -103,8 +103,8 @@ const Hero = () => {
           <Button
             type='submit'
             bSh=''
-            transform='scale(1)'
-            bgColor='#1b1b1b'
+            transform='scale(1.04)'
+            bgColor='#111010'
             width='12%'
             padding='5px 00'
             margin='0px 0 0 10px'
@@ -125,7 +125,6 @@ const Wrapper = styled.main`
   width: 65%;
   border: 1px solid #474747da;
   height: 100%;
-  /* transition: all 1s ease; */
 
   .header {
     background: #323739;
@@ -163,7 +162,7 @@ const Wrapper = styled.main`
   }
 
   .chat_body {
-    padding: 30px;
+    padding: 30px 20px;
     overflow-y: scroll;
     height: 84%;
 
@@ -173,7 +172,7 @@ const Wrapper = styled.main`
       width: fit-content;
       border-radius: 5px;
       font-weight: 400;
-      font-size: 0.9em;
+      font-size: 0.84em;
       position: relative;
       margin-bottom: 60px;
       /* border-top-left-radius: 0%; */
@@ -200,12 +199,12 @@ const Wrapper = styled.main`
 
     /* width */
     ::-webkit-scrollbar {
-      width: 10px;
+      width: 5px;
     }
 
     /* Track */
     ::-webkit-scrollbar-track {
-      background: #c0c0c0;
+      background: transparent;
     }
 
     /* Handle */
@@ -220,11 +219,15 @@ const Wrapper = styled.main`
   }
 
   .footer {
-    padding: 0px 12px;
     height: 6%;
     /* border: 1px solid red; */
-
+    background-color: #1e2428;
     form {
+      width: 100%;
+      height: 100%;
+      padding: 5px 10px 5px 10px;
+      /* border: 1px solid green; */
+
       label {
         font-size: 1em;
         font-weight: 500;
@@ -232,9 +235,9 @@ const Wrapper = styled.main`
 
       input {
         padding: 5px 10px;
-        border-radius: 2px;
-        width: 72%;
+        border-radius: 10px;
         margin-left: 15px;
+        width: 73%;
       }
     }
   }
