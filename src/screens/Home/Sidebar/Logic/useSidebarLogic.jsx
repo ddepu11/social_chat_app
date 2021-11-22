@@ -1,4 +1,4 @@
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { useEffect, useRef, useState } from 'react';
 import { collection, onSnapshot } from 'firebase/firestore';
@@ -13,7 +13,8 @@ const useSidebarLogic = () => {
   const dispatch = useDispatch();
   const history = useHistory();
 
-  // const { info } = useSelector((state) => state.user.value);
+  const { currentRoomId } = useSelector((state) => state.room.value);
+
   const [rooms, setRooms] = useState([]);
 
   useEffect(() => {
@@ -66,6 +67,7 @@ const useSidebarLogic = () => {
     closeProfileSidebar,
     logOutUser,
     rooms,
+    currentRoomId,
   };
 };
 
